@@ -1,6 +1,9 @@
 # Set variables for the firewall rule and the whitelist file
-$ports = @(1433, 3306, 8080)
-$serviceNames = @("SQL", "MySQL", "HTTP")
+$ports = 1433
+$serviceNames = "SQL"
+
+#$ports = @(1433, 3306, 8080)
+#$serviceNames = @("SQL", "MySQL", "HTTP")
 $whitelistFile = "C:\nssm\whitelist.txt"
 
 # Check if script is running as administrator
