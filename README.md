@@ -33,7 +33,7 @@ $serviceNames = @("SQL", "MySQL", "HTTP")<br />
 
 Just add ip, domains, dyn dns based domain, IP block which you need to WHITELIST / permit access to the port 1433 (or any other if u modify the code)
 
-c:\whitelist.txt<br /> 
+c:\nssm\whitelist.txt<br /> 
 <br /> 
 12.34.56.78<br /> 
 91.35.55.45<br /> 
@@ -47,14 +47,12 @@ system36.mycompany.com<br />
 
 <br /> 
 
-*You can start stop top service to take immediate effect of the whitelist.
+Tip - You can start stop top service to take immediate effect of the whitelist.
 The service "FirewallPortWhitelistAccess" in services.msc
-  
-**Uninstall Steps**
 
-1) c:\nssm\nssm.exe stop "service name"  and   c:\nssm\nssm.exe remove "service name"
-2) from firewall inbound rules
-3) Remove Block IncomingSQL etc
-4) Delte "Firewall sql rule" from inbound rule
-5) take backup of c:\nssm\whitelist.txt
-6) remove c:\nssm
+# Uninstall Steps
+1. `C:\nssm\nssm-2.24\win64\nssm remove FirewallPortWhitelistAccess` from firewall inbound rules
+2. Remove `Block Incoming SQL` and other if installed, e.g. `Block Incoming SQL/MYSQL/RDP/FTP`
+3. Delete `Firewall SQL/MYSQL/RDP/FTP Rule` from inbound rule
+4. Take backup of `c:\nssm\whitelist.txt`
+5. Remove `c:\nssm`
