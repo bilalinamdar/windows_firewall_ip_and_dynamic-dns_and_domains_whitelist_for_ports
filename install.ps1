@@ -52,8 +52,8 @@ $command = "powershell.exe -ExecutionPolicy Bypass -File C:\nssm\firewall_sql_ac
 # Set the command to run the service
 & $nssmPath set $serviceName AppExit DefaultRestart
 & $nssmPath set $serviceName AppNoConsole 1
-& $nssmPath set $serviceName AppStdout "C:\path\to\logs\service.out"
-& $nssmPath set $serviceName AppStderr "C:\path\to\logs\service.err"
+& $nssmPath set $serviceName AppStdout "C:\nssm\service.out"
+& $nssmPath set $serviceName AppStderr "C:\nssm\service.err"
 & $nssmPath set $serviceName AppDirectory "C:\"
 & $nssmPath set $serviceName AppType Own_Process
 & $nssmPath set $serviceName AppThrottle 2500
