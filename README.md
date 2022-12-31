@@ -14,7 +14,7 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
 Installation:
 
 
-Usage :
+**Usage :**
 Just add ip, domains, dyn dns based domain, IP block which you need to WHITELIST / permit access to the port 1433 (or any other if u modify the code)
 
 c:\whitelist.txt
