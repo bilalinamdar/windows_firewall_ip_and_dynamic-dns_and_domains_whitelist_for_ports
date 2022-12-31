@@ -29,9 +29,9 @@ $serviceNames = @("SQL", "MySQL", "HTTP")<br />
 4) run the service "FirewallPortWhitelistAccess" in services.msc again.
 5) You can check the rule in the firewall adavanced "Firewall <ServiceName> Rule" got to scope you will find the whitelisted ips if domains are present in the c:\nssm\whitelist.txt
 
-**Usage**
-
-Just add ip, domains, dyn dns based domain, IP block which you need to WHITELIST / permit access to the port 1433 (or any other if u modify the code)
+# Usage
+1) Every 5 minutes the Whitelist gets updated.
+2) Just add IPs, domains, dyn dns based domains, and IP blocks that you need to **WHITELIST** or permit access to port 1433 (or any other if you modify the code) to `c:\nssm\whitelist.txt`:
 
 c:\nssm\whitelist.txt<br /> 
 <br /> 
@@ -46,9 +46,7 @@ mycompany.com<br />
 system36.mycompany.com<br /> 
 
 <br /> 
-
-Tip - You can start stop top service to take immediate effect of the whitelist.
-The service "FirewallPortWhitelistAccess" in services.msc
+3) You can start, stop, or top the service to take immediate effect of the whitelist. The service is called "FirewallPortWhitelistAccess" in `services.msc`.
 
 # Uninstall Steps
 1. `C:\nssm\nssm-2.24\win64\nssm remove FirewallPortWhitelistAccess` from firewall inbound rules
