@@ -30,15 +30,16 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
    2) Just add IPs, domains, dyn dns based domains, and IP blocks that you need to **WHITELIST** or permit access to ports to `c:\nssm\whitelist.txt`
  
      `c:\nssm\whitelist.txt`
-     <br /> 
-     12.34.56.78<br /> 
-     91.35.55.45<br /> 
-     172.16.0.0/12<br /> 
-     103.21.244.0/22<br /> 
+     12.34.56.78
+     mypc.duckdns.org
+     client.duckdns.org
+     91.35.55.45
+     172.16.0.0/12
+     103.21.244.0/22
      8.8.8.8<br /> 
-     mycompany.com<br /> 
-     91.108.4.0/22<br /> 
-     104.16.0.0/12<br /> 
+     mycompany.com
+     91.108.4.0/22
+     104.16.0.0/12
      system36.mycompany.com
    
    3) You can start, stop, or top the service to take immediate effect of the whitelist. The service is called "FirewallPortWhitelistAccess" in `services.msc`.
