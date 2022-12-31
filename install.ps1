@@ -1,16 +1,8 @@
-################################
-# Set the values of the variables
-
-#$port = 3389
-#$myservice = "RDP" ### You can add service name such as RDP / SQL etc
-
-#other variable keep as is.
+# Install script as a service in windows
 
 $serviceName = "FirewallPortWhitelistAccess"
 $serviceDisplayName = "Firewall Port Whitelist Access"
 
-
-##Download NSSM
 # Check if script is running as administrator
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Error "This script must be run as an administrator. Please re-run the script as an administrator."
@@ -50,31 +42,11 @@ if (!(Test-Path C:\nssm\nssm-2.24\win64\nssm.exe)) {
     exit
 }
 
-if (-Not (Test-Path "C:\whitelist.txt")) {
-    New-Item -ItemType File -Path "C:\whitelist.txt"
+if (-Not (Test-Path "C:\nssm\whitelist.txt")) {
+    New-Item -ItemType File -Path "C:\nssm\whitelist.txt"
 }
 
-
-# Read the contents of the firewall_sql_access_rule.ps1 script into a variable
-#$firewallScript = Get-Content -Path C:\nssm\firewall_sql_access_rule.ps1
-
-# Replace the value of the $port variable with the value of the $port variable in the install.ps1 script
-#$firewallScript = $firewallScript -replace '\$port = \d+', '$port = ' + $port
-
-# Replace the value of the $myservice variable with the value of the $myservice variable in the install.ps1 script
-#$firewallScript = $firewallScript -replace '\$myservice = "([A-Za-z]+)"', '$myservice = "' + $myservice + '"'
-
-# Save the modified contents of the firewall_sql_access_rule.ps1 script back to the file
-#Set-Content -Path C:\nssm\firewall_sql_access_rule.ps1 -Value $firewallScript
-
 ##Install Script as a service
-
-# Set the name and display name for the service
-
-
-# Set the command to run the script
-
-
 $PathPowerShell = (Get-Command Powershell).Source # Path to PowerShell.exe
 $PathScript = $destination
 # Arguments for PowerShell, with your script and no personnalised profile
@@ -82,18 +54,4 @@ $ServiceArguments = '-ExecutionPolicy Bypass -NoProfile -File "{0}"' -f $PathScr
 # NSSM usage : nssm.exe install <service_name> "<path_to_exe_to_encapsulate>" "<argument1 argument2>"
 & $nssmPath install $serviceName $PathPowerShell $ServiceArguments
 
-
-
-# Install the service
-#& $nssmPath install $serviceName
-# Install the service using the service name and display name
-# Replace path\to\nssm.exe with the actual path to nssm.exe on your system
-#& $nssmPath install $serviceName "powershell.exe -ExecutionPolicy Bypass -File C:\nssm\firewall_sql_access_rule.ps1" -DisplayName $serviceDisplayName
-
 & $nssmPath start $serviceName
-# Start the service
-#Start-Service $serviceName
-
-& $nssmPath status $serviceName
-#Start-Sleep -Seconds 5
-###################################################################
