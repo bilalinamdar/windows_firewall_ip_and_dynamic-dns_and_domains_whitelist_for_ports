@@ -15,12 +15,15 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
    2. Stop the service "FirewallPortWhitelistAccess" in services.msc
    3. Edit C:\nssm\firewall_sql_access_rule.ps1 and change the same $port and $myservice in it too. Change in as below format.
     <br /> 
+    
     **Single Port**<br /> 
     $ports = @(1433)<br />
       $serviceNames = @("SQL")<br /> 
+    
     **For multiple Ports use below format values**<br /> 
     $ports = @(1433, 3306, 8080)<br />
       $serviceNames = @("SQL", "MySQL", "HTTP")<br />
+      
    4. run the service "FirewallPortWhitelistAccess" in services.msc again.
    5. You can check the rule in the firewall adavanced "Firewall <ServiceName> Rule" go to scope you will find the whitelisted ips extracted from whitelist.txt
 
