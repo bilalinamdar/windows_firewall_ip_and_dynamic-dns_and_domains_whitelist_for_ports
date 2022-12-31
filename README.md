@@ -13,17 +13,20 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
 
 **Installation**
 
-1) Download install.ps1
-2) Change the port and the service name as below in install.ps1
-$port = 1433
-$myservice = "SQL" ### You can add service name such as RDP / SQL etc
-3) run the install.ps1 in powershell with administration right
-
+1) Download and run the install.ps1 in powershell with administration right
 ** If you need to change port and service name than you have to do below
-1) change install.ps1 $port and $myservice
-2) stop the service in services.msc
-3) edit C:\nssm\firewall_sql_access_rule.ps1 and change the same $port and $myservice in it too.
-4) run the service again.
+2) stop the service "FirewallPortWhitelistAccess" in services.msc
+3) edit C:\nssm\firewall_sql_access_rule.ps1 and change the same $port and $myservice in it too. check the example for using multiple port
+
+#Single Port
+$ports = @(1433)
+$serviceNames = @("SQL")
+
+#For multiple Ports use below format values
+$ports = @(1433, 3306, 8080)
+$serviceNames = @("SQL", "MySQL", "HTTP")
+
+4) run the service "FirewallPortWhitelistAccess" in services.msc again.
 
 **Usage**
 
