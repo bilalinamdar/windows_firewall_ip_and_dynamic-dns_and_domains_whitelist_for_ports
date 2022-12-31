@@ -35,7 +35,7 @@ $serviceNames = @("SQL", "MySQL", "HTTP")<br />
 
   `c:\nssm\whitelist.txt`<br /> 
 <br /> 
-'''12.34.56.78<br /> 
+12.34.56.78<br /> 
 91.35.55.45<br /> 
 172.16.0.0/12<br /> 
 103.21.244.0/22<br /> 
@@ -43,7 +43,7 @@ $serviceNames = @("SQL", "MySQL", "HTTP")<br />
 mycompany.com<br /> 
 91.108.4.0/22<br /> 
 104.16.0.0/12<br /> 
-system36.mycompany.com<br /> '''
+system36.mycompany.com<br />
 
 <br /> 
 3) You can start, stop, or top the service to take immediate effect of the whitelist. The service is called "FirewallPortWhitelistAccess" in `services.msc`.
