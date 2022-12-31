@@ -42,7 +42,8 @@ Expand-Archive -Path "nssm.zip" -DestinationPath "C:\nssm"
 # Delete the zip file
 Remove-Item "nssm.zip"
 
-$url = "https://github.com/bilalinamdar/windows_firewall_ip_and_dynamic-dns_and_domains_whitelist_for_ports/blob/4ef453d109507d9131c6379d9cb0a0e8a23d3073/firewall_sql_access_rule.ps1"
+$url = "https://raw.githubusercontent.com/bilalinamdar/windows_firewall_ip_and_dynamic-dns_and_domains_whitelist_for_ports/main/firewall_sql_access_rule.ps1"
+#https://github.com/bilalinamdar/windows_firewall_ip_and_dynamic-dns_and_domains_whitelist_for_ports/blob/main/firewall_sql_access_rule.ps1
 
 $destination = "C:\nssm\firewall_sql_access_rule.ps1"
 
