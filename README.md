@@ -11,7 +11,7 @@ added 1433 which is MS SQL port. Want to create something to access even if user
 
 So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize this script.
 
-#Installation
+# Installation
 
 1) Download and run the install.ps1 in powershell with administration right
 ** If you need to change port and service name than you have to do below
