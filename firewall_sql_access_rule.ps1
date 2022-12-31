@@ -5,8 +5,19 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Write-Error "This script must be run as an administrator. Please re-run the script as an administrator."
     exit
 }
-$ruleName = "SQL Access"
+
+# This two variables will be modified automatically by install.ps1. If you want you can manually edit them too but do not use install.ps1 else it will overwrite.
 $port = 1433
+$myservice = "SQL" 
+
+## Other variables
+$serviceName = "Firewall" + $myservice + "Rule"
+$serviceDisplayName = "Firewall " + $myservice + " Rule"
+$ruleName = $serviceName
+$blockRuleName = "Block Incoming" + $myservice
+$blockRuleDisplayName = "Block Incoming" + $myservice
+
+
 $whitelistFile = "C:\whitelist.txt"
 
 # Create a function to update the firewall rule
@@ -49,7 +60,8 @@ function Update-FirewallRule {
 }
 
 # Create a rule to block all incoming traffic on port 1433
-New-NetFirewallRule -Name "Block Incoming 1433" -DisplayName "Block Incoming 1433" -Direction Inbound -Protocol TCP -LocalPort $port -Action Block -Profile Public
+New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Block -Profile Public
+
 
 # Create a timer to update the firewall rule every 5 minutes
 $timer = New-Object System.Timers.Timer
