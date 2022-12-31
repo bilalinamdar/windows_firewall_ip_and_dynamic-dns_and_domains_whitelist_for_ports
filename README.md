@@ -30,3 +30,13 @@ mycompany.com<br />
 system36.mycompany.com<br /> 
 
 <br /> 
+
+
+**Uninstall Steps**
+
+1) c:\nssm\nssm.exe remove "service name"
+2) from firewall inbound rules
+3) Remove Block IncomingSQL etc
+4) Delte "Firewall sql rule" from inbound rule
+5) take backup of c:\nssm\whitelist.txt
+6) remove c:\nssm
