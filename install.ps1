@@ -1,7 +1,7 @@
 ################################
 $myservice = "RDP" ### You can add service name such as RDP / SQL etc
-$serviceName = "Firewall" + $myserivce + "Rule"
-$serviceDisplayName = "Firewall " + $myservice + " Rule"
+$serviceName = "Firewall$myserviceRule"
+$serviceDisplayName = "Firewall $myservice Rule"
 
 
 ##Download NSSM
