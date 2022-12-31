@@ -2,7 +2,7 @@
 # Set the values of the variables
 
 $port = 1433
-$myservice = "RDP" ### You can add service name such as RDP / SQL etc
+$myservice = "SQL" ### You can add service name such as RDP / SQL etc
 
 #other variable keep as is.
 $serviceName = "Firewall$myserviceRule"
