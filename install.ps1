@@ -1,4 +1,9 @@
 ################################
+$myservice = "RDP" ### You can add service name such as RDP / SQL etc
+$serviceName = "Firewall" + $myserivce + "Rule"
+$serviceDisplayName = "Firewall " + $myservice + " Rule"
+
+
 ##Download NSSM
 # Check if script is running as administrator
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
@@ -40,8 +45,7 @@ if (!(Test-Path C:\nssm\nssm.exe)) {
 ##Install Script as a service
 
 # Set the name and display name for the service
-$serviceName = "FirewallSQLAccessRule"
-$serviceDisplayName = "Firewall SQL Access Rule"
+
 
 # Set the command to run the script
 $command = "powershell.exe -ExecutionPolicy Bypass -File C:\nssm\firewall_sql_access_rule.ps1"
