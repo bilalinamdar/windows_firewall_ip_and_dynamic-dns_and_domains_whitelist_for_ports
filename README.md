@@ -43,7 +43,7 @@ $serviceNames = @("SQL", "MySQL", "HTTP")<br />
   mycompany.com<br /> 
   91.108.4.0/22<br /> 
   104.16.0.0/12<br /> 
-  system36.mycompany.com<br /><br /> 
+  system36.mycompany.com<br /><br />
   3) You can start, stop, or top the service to take immediate effect of the whitelist. The service is called "FirewallPortWhitelistAccess" in `services.msc`.
 
 # Uninstall Steps
