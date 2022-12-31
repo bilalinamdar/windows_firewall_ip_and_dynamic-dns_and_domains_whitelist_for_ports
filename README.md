@@ -12,6 +12,7 @@ added 1433 which is MS SQL port. Want to create something to access even if user
 So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize this script.
 
 **Installation**
+
 1) Download install.ps1
 2) Change the port and the service name as below in install.ps1
 $port = 1433
@@ -24,7 +25,8 @@ $myservice = "SQL" ### You can add service name such as RDP / SQL etc
 3) edit C:\nssm\firewall_sql_access_rule.ps1 and change the same $port and $myservice in it too.
 4) run the service again.
 
-**Usage :**
+**Usage**
+
 Just add ip, domains, dyn dns based domain, IP block which you need to WHITELIST / permit access to the port 1433 (or any other if u modify the code)
 
 c:\whitelist.txt<br /> 
