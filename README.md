@@ -2,7 +2,7 @@
 Whitelist IP address / Dynamic DNS / Domain / IP block on Ports in Windows server
 
 
-If you try to add domain in the INBOUND WINDOWS FIREWALL Rule it will not accept.
+If you try to add domain in the INBOUND WINDOWS Defender Firewall Rule it will not accept.
 So to allow dynamic DNS based domain and Domain's as well plus the IP's and IP block.
 I have created this script.
 
