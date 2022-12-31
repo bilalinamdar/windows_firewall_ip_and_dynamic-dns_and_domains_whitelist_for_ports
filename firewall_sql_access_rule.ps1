@@ -1,33 +1,23 @@
-#firewall_sql_access_rule.ps1
 # Set variables for the firewall rule and the whitelist file
+$ports = @(1433, 3306, 8080)
+$serviceNames = @("SQL", "MySQL", "HTTP")
+$whitelistFile = "C:\nssm\whitelist.txt"
+
 # Check if script is running as administrator
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Error "This script must be run as an administrator. Please re-run the script as an administrator."
     exit
 }
 
-# This two variables will be modified automatically by install.ps1. If you want you can manually edit them too but do not use install.ps1 else it will overwrite.
-$port = 1433
-$myservice = "SQL" 
-
-## Other variables
-$serviceName = "Firewall" + $myservice + "Rule"
-$serviceDisplayName = "Firewall " + $myservice + " Rule"
-$ruleName = $serviceName
-$blockRuleName = "Block Incoming" + $myservice
-$blockRuleDisplayName = "Block Incoming" + $myservice
-
-$whitelistFile = "C:\nssm\whitelist.txt"
-
-if (!(Test-Path $whitelistFile)) {
-    New-Item -ItemType File -Path $whitelistFile
-}
-
 # Create a function to update the firewall rule
-function Update-FirewallRule {
+function Update-FirewallRule($port, $myservice) {
+    # Set variables for the firewall rule
+    $serviceName = "Firewall" + $myservice + "Rule"
+    $serviceDisplayName = "Firewall " + $myservice + " Rule"
+    $ruleName = $serviceName
+
     # Check if the rule already exists
-	
-	$error = ""
+    $error = ""
     $rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable error -ErrorAction SilentlyContinue
     if ($rule) {
         # Update the rule with the current whitelist
@@ -64,17 +54,23 @@ function Update-FirewallRule {
     }
 }
 
-# Create a rule to block all incoming traffic on port 1433
+# Create a rule to block all incoming traffic on each port
 # Check if the firewall rule already exists
-$ruleExists = Get-NetFirewallRule -Name $blockRuleName -ErrorAction SilentlyContinue
+for ($i = 0; $i -lt $ports.Length; $i++) {
+    $blockRuleName = "Block Incoming " + $serviceNames[$i]
+    $blockRuleDisplayName = "Block Incoming " + $serviceNames[$i]
+    $ruleExists = Get-NetFirewallRule -Name $blockRuleName -ErrorAction SilentlyContinue
 
-# If the rule does not exist, create it
-if (-not $ruleExists) {
-    New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Block -Profile Public  | Out-Null
+    # If the rule does not exist, create it
+    if (-not $ruleExists) {
+        New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $ports[$i] -Action Block -Profile Public  | Out-Null
+    }
 }
 
-
+# Create or update the firewall rules for each port
 while ($true) {
-Update-FirewallRule
-Start-Sleep -Seconds 300
+    for ($i = 0; $i -lt $ports.Length; $i++) {
+        Update-FirewallRule $ports[$i] $serviceNames[$i]
+    }
+    Start-Sleep -Seconds 300
 }
