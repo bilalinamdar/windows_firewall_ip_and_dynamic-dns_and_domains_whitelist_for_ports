@@ -16,17 +16,18 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
 1) Download and run the install.ps1 in powershell with administration right
 ** If you need to change port and service name than you have to do below
 2) stop the service "FirewallPortWhitelistAccess" in services.msc
-3) edit C:\nssm\firewall_sql_access_rule.ps1 and change the same $port and $myservice in it too. check the example for using multiple port
+3) edit C:\nssm\firewall_sql_access_rule.ps1 and change the same $port and $myservice in it too. Change in as below format.
+<br /> 
+#Single Port<br /> 
+$ports = @(1433)<br /> 
+$serviceNames = @("SQL")<br /> 
 
-#Single Port
-$ports = @(1433)
-$serviceNames = @("SQL")
-
-#For multiple Ports use below format values
-$ports = @(1433, 3306, 8080)
-$serviceNames = @("SQL", "MySQL", "HTTP")
+#For multiple Ports use below format values<br /> 
+$ports = @(1433, 3306, 8080)<br /> 
+$serviceNames = @("SQL", "MySQL", "HTTP")<br /> 
 
 4) run the service "FirewallPortWhitelistAccess" in services.msc again.
+5) You can check the rule in the firewall adavanced "Firewall <ServiceName> Rule" got to scope you will find the whitelisted ips if domains are present in the c:\nssm\whitelist.txt
 
 **Usage**
 
@@ -46,7 +47,9 @@ system36.mycompany.com<br />
 
 <br /> 
 
-
+*You can start stop top service to take immediate effect of the whitelist.
+The service "FirewallPortWhitelistAccess" in services.msc
+  
 **Uninstall Steps**
 
 1) c:\nssm\nssm.exe stop "service name"  and   c:\nssm\nssm.exe remove "service name"
