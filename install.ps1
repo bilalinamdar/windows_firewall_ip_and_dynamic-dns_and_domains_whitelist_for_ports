@@ -1,4 +1,6 @@
 # Install script as a service in windows
+# We will be using NSSM - the Non-Sucking Service Manager for this task.
+# Courtesy https://nssm.cc/release/nssm-2.24.zip
 
 $serviceName = "FirewallPortWhitelistAccess"
 $serviceDisplayName = "Firewall Port Whitelist Access"
