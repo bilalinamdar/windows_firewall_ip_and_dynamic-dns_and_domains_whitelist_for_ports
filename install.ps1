@@ -1,12 +1,13 @@
 ################################
 # Set the values of the variables
 
-$port = 1433
-$myservice = "SQL" ### You can add service name such as RDP / SQL etc
+#$port = 3389
+#$myservice = "RDP" ### You can add service name such as RDP / SQL etc
 
 #other variable keep as is.
-$serviceName = "Firewall$myserviceRule"
-$serviceDisplayName = "Firewall $myservice Rule"
+
+$serviceName = "FirewallPortWhitelistAccess"
+$serviceDisplayName = "Firewall Port Whitelist Access"
 
 
 ##Download NSSM
@@ -17,7 +18,8 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 # Set the path to the nssm executable
-$nssmPath = "C:\nssm\nssm.exe"
+$nssmPath = "C:\nssm\nssm-2.24\win64\nssm.exe"
+
 
 # Download the latest version of nssm
 Invoke-WebRequest -Uri "https://nssm.cc/release/nssm-2.24.zip" -OutFile "nssm.zip"
@@ -43,25 +45,27 @@ if (!(Test-Path C:\nssm\firewall_sql_access_rule.ps1)) {
 }
 
 # Check if nssm.exe file does not exist in the C:\nssm directory
-if (!(Test-Path C:\nssm\nssm.exe)) {
+if (!(Test-Path C:\nssm\nssm-2.24\win64\nssm.exe)) {
     Write-Error "nssm.exe file not found in the C:\nssm directory. Please make sure that the file is present and try again."
     exit
 }
 
-# Read the contents of firewall_sql_access_rule.ps1 into a variable
-$firewallScript = Get-Content .\firewall_sql_access_rule.ps1
+if (-Not (Test-Path "C:\whitelist.txt")) {
+    New-Item -ItemType File -Path "C:\whitelist.txt"
+}
 
-# Replace the values of the variables in firewall_sql_access_rule.ps1 with the new values
 
-# Replace the $port variable with the value of $port
-$firewallScript = $firewallScript -replace '\$port = \d+', '$port = ' + $port
+# Read the contents of the firewall_sql_access_rule.ps1 script into a variable
+#$firewallScript = Get-Content -Path C:\nssm\firewall_sql_access_rule.ps1
 
-# Replace the $myservice variable with the value of $myservice
-$firewallScript = $firewallScript -replace '\$myservice = "([A-Za-z]+)"', '$myservice = "' + $myservice + '"'
+# Replace the value of the $port variable with the value of the $port variable in the install.ps1 script
+#$firewallScript = $firewallScript -replace '\$port = \d+', '$port = ' + $port
 
-# Save the modified firewall_sql_access_rule.ps1 script
-Set-Content .\firewall_sql_access_rule.ps1 -Value $firewallScript
+# Replace the value of the $myservice variable with the value of the $myservice variable in the install.ps1 script
+#$firewallScript = $firewallScript -replace '\$myservice = "([A-Za-z]+)"', '$myservice = "' + $myservice + '"'
 
+# Save the modified contents of the firewall_sql_access_rule.ps1 script back to the file
+#Set-Content -Path C:\nssm\firewall_sql_access_rule.ps1 -Value $firewallScript
 
 ##Install Script as a service
 
@@ -69,36 +73,27 @@ Set-Content .\firewall_sql_access_rule.ps1 -Value $firewallScript
 
 
 # Set the command to run the script
-$command = "powershell.exe -ExecutionPolicy Bypass -File C:\nssm\firewall_sql_access_rule.ps1"
+
+
+$PathPowerShell = (Get-Command Powershell).Source # Path to PowerShell.exe
+$PathScript = $destination
+# Arguments for PowerShell, with your script and no personnalised profile
+$ServiceArguments = '-ExecutionPolicy Bypass -NoProfile -File "{0}"' -f $PathScript 
+# NSSM usage : nssm.exe install <service_name> "<path_to_exe_to_encapsulate>" "<argument1 argument2>"
+& $nssmPath install $serviceName $PathPowerShell $ServiceArguments
+
+
 
 # Install the service
-& $nssmPath install $serviceName
+#& $nssmPath install $serviceName
+# Install the service using the service name and display name
+# Replace path\to\nssm.exe with the actual path to nssm.exe on your system
+#& $nssmPath install $serviceName "powershell.exe -ExecutionPolicy Bypass -File C:\nssm\firewall_sql_access_rule.ps1" -DisplayName $serviceDisplayName
 
-# Set the command to run the service
-& $nssmPath set $serviceName AppExit DefaultRestart
-& $nssmPath set $serviceName AppNoConsole 1
-& $nssmPath set $serviceName AppStdout "C:\nssm\service.out"
-& $nssmPath set $serviceName AppStderr "C:\nssm\service.err"
-& $nssmPath set $serviceName AppDirectory "C:\"
-& $nssmPath set $serviceName AppType Own_Process
-& $nssmPath set $serviceName AppThrottle 2500
-& $nssmPath set $serviceName AppStdoutCreationDisposition 2
-& $nssmPath set $serviceName AppStderrCreationDisposition 2
-& $nssmPath set $serviceName AppStdoutRotationTime 1
-& $nssmPath set $serviceName AppStderrRotationTime 1
-& $nssmPath set $serviceName AppStdoutRotationSize 100000000
-& $nssmPath set $serviceName AppStderrRotationSize 100000000
-& $nssmPath set $serviceName AppStdoutRotationOnTimeChange 1
-& $nssmPath set $serviceName AppStderrRotationOnTimeChange 1
+& $nssmPath start $serviceName
+# Start the service
+#Start-Service $serviceName
 
-# Set the display name for the service
-& $nssmPath set $serviceName DisplayName $serviceDisplayName
-
-# Set the command for the service
-& $nssmPath set $serviceName AppCommand $command
-
-net start $serviceName
-#Start-Service -Name $serviceName
-Get-Service $serviceName
-Start-Sleep -Seconds 15
+& $nssmPath status $serviceName
+#Start-Sleep -Seconds 5
 ###################################################################
