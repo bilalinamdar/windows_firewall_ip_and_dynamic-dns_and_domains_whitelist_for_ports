@@ -8,20 +8,6 @@ $myservice = "RDP" ### You can add service name such as RDP / SQL etc
 $serviceName = "Firewall$myserviceRule"
 $serviceDisplayName = "Firewall $myservice Rule"
 
-# Read the contents of firewall_sql_access_rule.ps1 into a variable
-$firewallScript = Get-Content .\firewall_sql_access_rule.ps1
-
-# Replace the values of the variables in firewall_sql_access_rule.ps1 with the new values
-
-# Replace the $port variable with the value of $port
-$firewallScript = $firewallScript -replace '\$port = \d+', '$port = ' + $port
-
-# Replace the $myservice variable with the value of $myservice
-$firewallScript = $firewallScript -replace '\$myservice = "([A-Za-z]+)"', '$myservice = "' + $myservice + '"'
-
-# Save the modified firewall_sql_access_rule.ps1 script
-Set-Content .\firewall_sql_access_rule.ps1 -Value $firewallScript
-
 
 ##Download NSSM
 # Check if script is running as administrator
@@ -61,6 +47,20 @@ if (!(Test-Path C:\nssm\nssm.exe)) {
     Write-Error "nssm.exe file not found in the C:\nssm directory. Please make sure that the file is present and try again."
     exit
 }
+
+# Read the contents of firewall_sql_access_rule.ps1 into a variable
+$firewallScript = Get-Content .\firewall_sql_access_rule.ps1
+
+# Replace the values of the variables in firewall_sql_access_rule.ps1 with the new values
+
+# Replace the $port variable with the value of $port
+$firewallScript = $firewallScript -replace '\$port = \d+', '$port = ' + $port
+
+# Replace the $myservice variable with the value of $myservice
+$firewallScript = $firewallScript -replace '\$myservice = "([A-Za-z]+)"', '$myservice = "' + $myservice + '"'
+
+# Save the modified firewall_sql_access_rule.ps1 script
+Set-Content .\firewall_sql_access_rule.ps1 -Value $firewallScript
 
 
 ##Install Script as a service
