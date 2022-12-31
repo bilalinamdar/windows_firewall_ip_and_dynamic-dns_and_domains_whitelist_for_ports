@@ -11,7 +11,6 @@ added 1433 which is MS SQL port. Want to create something to access even if user
 
 So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize this script.
 
-Installation:
 **Installation**
 1) Download install.ps1
 2) Change the port and the service name as below in install.ps1
