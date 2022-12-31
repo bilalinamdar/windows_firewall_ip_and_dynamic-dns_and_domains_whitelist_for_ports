@@ -39,10 +39,9 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
      mycompany.com<br /> 
      91.108.4.0/22<br /> 
      104.16.0.0/12<br /> 
-     system36.mycompany.com<br />
-     <br />
+     system36.mycompany.com
    
-     3) You can start, stop, or top the service to take immediate effect of the whitelist. The service is called "FirewallPortWhitelistAccess" in `services.msc`.
+   3) You can start, stop, or top the service to take immediate effect of the whitelist. The service is called "FirewallPortWhitelistAccess" in `services.msc`.
 
 # Uninstall Steps
 1. `C:\nssm\nssm-2.24\win64\nssm remove FirewallPortWhitelistAccess` from firewall inbound rules
