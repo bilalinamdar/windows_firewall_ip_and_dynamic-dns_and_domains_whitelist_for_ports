@@ -17,13 +17,18 @@ $ruleName = $serviceName
 $blockRuleName = "Block Incoming" + $myservice
 $blockRuleDisplayName = "Block Incoming" + $myservice
 
+$whitelistFile = "C:\nssm\whitelist.txt"
 
-$whitelistFile = "C:\whitelist.txt"
+if (!(Test-Path $whitelistFile)) {
+    New-Item -ItemType File -Path $whitelistFile
+}
 
 # Create a function to update the firewall rule
 function Update-FirewallRule {
     # Check if the rule already exists
-    $rule = Get-NetFirewallRule -Name $ruleName
+	
+	$error = ""
+    $rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable error -ErrorAction SilentlyContinue
     if ($rule) {
         # Update the rule with the current whitelist
         $ips = @()
@@ -55,20 +60,21 @@ function Update-FirewallRule {
                 $ips += $ip
             }
         }
-        New-NetFirewallRule -Name $ruleName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile Public
+        New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile Public | Out-Null
     }
 }
 
 # Create a rule to block all incoming traffic on port 1433
-New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Block -Profile Public
+# Check if the firewall rule already exists
+$ruleExists = Get-NetFirewallRule -Name $blockRuleName -ErrorAction SilentlyContinue
+
+# If the rule does not exist, create it
+if (-not $ruleExists) {
+    New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Block -Profile Public  | Out-Null
+}
 
 
-# Create a timer to update the firewall rule every 5 minutes
-$timer = New-Object System.Timers.Timer
-$timer.Interval = 300000
-$timer.AutoReset = $true
-$timer.Enabled = $true
-$timer.Add_Elapsed({ Update-FirewallRule })
-
-# Run the timer
-$timer.Start()
+while ($true) {
+Update-FirewallRule
+Start-Sleep -Seconds 300
+}
