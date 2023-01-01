@@ -30,7 +30,6 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
 # Usage
    1) Every 5 minutes the Whitelist gets updated.
    2) Just add IPs, domains, dyn dns based domains, and IP blocks that you need to **WHITELIST** or permit access to ports to `c:\nssm\whitelist.txt`
-     `c:\nssm\whitelist.txt`
    
        ```
        12.34.56.78
