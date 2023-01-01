@@ -38,7 +38,7 @@ So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize 
      91.35.55.45
      172.16.0.0/12
      103.21.244.0/22
-     8.8.8.8<br /> 
+     8.8.8.8
      mycompany.com
      91.108.4.0/22
      104.16.0.0/12
