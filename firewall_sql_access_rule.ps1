@@ -61,6 +61,7 @@ function Update-FirewallRule($port, $myservice) {
 
 # Create a rule to block all incoming traffic on each port
 # Check if the firewall rule already exists
+
 #for ($i = 0; $i -lt $ports.Length; $i++) {
     #$blockRuleName = "Block Incoming " + $serviceNames[$i]
     #$blockRuleDisplayName = "Block Incoming " + $serviceNames[$i]
