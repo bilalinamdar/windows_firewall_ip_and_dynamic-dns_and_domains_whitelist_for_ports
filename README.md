@@ -2,6 +2,8 @@
 
 "The INBOUND WINDOWS Defender Firewall Rule does not accept the addition of a domain. This script allows users to securely access any desired ports and domains by whitelisting them via their domain names/ Static IP/ IP Block, even if the users have dynamic IP addresses that are managed using Dyn DNS services like Duck DNS or NO-IP. This ensures that users can access these resources even if their IP address is changing."
 
+# Important
+Disable any rules using the same port after following installation and usage !!
 
 # Installation
 
