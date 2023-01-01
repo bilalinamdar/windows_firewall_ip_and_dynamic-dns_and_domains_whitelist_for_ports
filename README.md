@@ -1,6 +1,6 @@
 # Whitelist IP address / Dynamic DNS / Domain / IP block on Ports in Windows server
 
-"The INBOUND WINDOWS Defender Firewall Rule does not accept the addition of a domain. This script allows users to securely access any desired ports and domains by whitelisting them via their domain names, even if the users have dynamic IP addresses that are managed using Dyn DNS services like Duck DNS or NO-IP. This ensures that users can access these resources even if their IP address is changing."
+"The INBOUND WINDOWS Defender Firewall Rule does not accept the addition of a domain. This script allows users to securely access any desired ports and domains by whitelisting them via their domain names/ Static IP/ IP Block, even if the users have dynamic IP addresses that are managed using Dyn DNS services like Duck DNS or NO-IP. This ensures that users can access these resources even if their IP address is changing."
 
 
 # Installation
