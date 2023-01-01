@@ -1,14 +1,8 @@
 # Whitelist IP address / Dynamic DNS / Domain / IP block on Ports in Windows server
 
+"The INBOUND WINDOWS Defender Firewall Rule does not accept the addition of a domain. This script allows users to securely access any desired ports and domains by whitelisting them via their domain names, even if the users have dynamic IP addresses that are managed using Dyn DNS services like Duck DNS or NO-IP. This ensures that users can access these resources even if their IP address is changing."
 
-If you try to add domain in the INBOUND WINDOWS Defender Firewall Rule it will not accept.
-So to allow dynamic DNS based domain and Domain's as well plus the IP's and IP block.
-I have created this script.
 
-The purpose is to allow secure access to ports mentioned. In this particular script i have 
-added 1433 which is MS SQL port. Want to create something to access even if users are on dynamic ip.
-
-So, If a user have a Dyn DNS service such as Duck DNS or NO-IP they can utilize this script.
 # Installation
 
    1. Download and run the install.ps1 in powershell with administration right
