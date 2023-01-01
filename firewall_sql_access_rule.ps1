@@ -61,15 +61,15 @@ function Update-FirewallRule($port, $myservice) {
 
 # Create a rule to block all incoming traffic on each port
 # Check if the firewall rule already exists
-for ($i = 0; $i -lt $ports.Length; $i++) {
-    $blockRuleName = "Block Incoming " + $serviceNames[$i]
-    $blockRuleDisplayName = "Block Incoming " + $serviceNames[$i]
-    $ruleExists = Get-NetFirewallRule -Name $blockRuleName -ErrorAction SilentlyContinue
+#for ($i = 0; $i -lt $ports.Length; $i++) {
+    #$blockRuleName = "Block Incoming " + $serviceNames[$i]
+    #$blockRuleDisplayName = "Block Incoming " + $serviceNames[$i]
+    #$ruleExists = Get-NetFirewallRule -Name $blockRuleName -ErrorAction SilentlyContinue
 
     # If the rule does not exist, create it
-    if (-not $ruleExists) {
-        New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $ports[$i] -Action Block -Profile Public  | Out-Null
-    }
+    #if (-not $ruleExists) {
+    #    New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $ports[$i] -Action Block -Profile Public  | Out-Null
+    #}
 }
 
 # Create or update the firewall rules for each port
