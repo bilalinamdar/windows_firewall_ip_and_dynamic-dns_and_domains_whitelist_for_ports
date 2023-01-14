@@ -16,6 +16,7 @@ $nssmPath = "C:\nssm\nssm-2.24\win64\nssm.exe"
 
 
 # Download the latest version of nssm
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest -Uri "https://nssm.cc/release/nssm-2.24.zip" -OutFile "nssm.zip"
 
 # Extract the nssm executable from the zip file
