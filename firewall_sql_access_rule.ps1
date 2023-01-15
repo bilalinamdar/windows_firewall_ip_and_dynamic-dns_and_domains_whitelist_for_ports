@@ -23,7 +23,9 @@ function Update-FirewallRule($port, $myservice) {
 
     # Check if the rule already exists
 $error = ""
+
 $rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable error -ErrorAction SilentlyContinue
+
 if ($rule) {
     # Update the rule with the current whitelist
     $ips = @()
