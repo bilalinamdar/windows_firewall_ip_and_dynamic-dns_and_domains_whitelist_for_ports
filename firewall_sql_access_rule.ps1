@@ -22,42 +22,53 @@ function Update-FirewallRule($port, $myservice) {
     $ruleName = $serviceName
 
     # Check if the rule already exists
-    $error = ""
-    $rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable error -ErrorAction SilentlyContinue
-    if ($rule) {
-        # Update the rule with the current whitelist
-        $ips = @()
-        $items = Get-Content $whitelistFile
-        foreach ($item in $items) {
-            # Check if the item is an IP address or a domain
-            if ([System.Net.IPAddress]::TryParse($item, [ref]$null)) {
-                # Add the IP address to the list
+$error = ""
+$rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable error -ErrorAction SilentlyContinue
+if ($rule) {
+    # Update the rule with the current whitelist
+    $ips = @()
+    $items = Get-Content $whitelistFile
+    foreach ($item in $items) {
+        # Check if the item is an IP address or a domain
+        if ([System.Net.IPAddress]::TryParse($item, [ref]$null)) {
+            # Check if the item is a subnet range in CIDR notation
+            if ($item -match '^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$') {
+                # Add the subnet range to the list
                 $ips += $item
             } else {
-                # Resolve the domain to an IP address and add it to the list
-                $ip = [System.Net.Dns]::GetHostAddresses($item) | Select-Object -First 1
-                $ips += $ip
-            }
-        }
-        Set-NetFirewallRule -Name $ruleName -RemoteAddress $ips
-    } else {
-        # Create the rule with the current whitelist
-        $ips = @()
-        $items = Get-Content $whitelistFile
-        foreach ($item in $items) {
-            # Check if the item is an IP address or a domain
-            if ([System.Net.IPAddress]::TryParse($item, [ref]$null)) {
                 # Add the IP address to the list
                 $ips += $item
-            } else {
-                # Resolve the domain to an IP address and add it to the list
-                $ip = [System.Net.Dns]::GetHostAddresses($item) | Select-Object -First 1
-                $ips += $ip
             }
+        } else {
+            # Resolve the domain to an IP address and add it to the list
+            $ip = [System.Net.Dns]::GetHostAddresses($item) | Select-Object -First 1
+            $ips += $ip
         }
-        New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips | Out-Null
-        #New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile Public | Out-Null
     }
+    Set-NetFirewallRule -Name $ruleName -RemoteAddress $ips # -Profile $profile
+} else {
+    # Create the rule with the current whitelist
+    $ips = @()
+    $items = Get-Content $whitelistFile
+    foreach ($item in $items) {
+        # Check if the item is an IP address or a domain
+        if ([System.Net.IPAddress]::TryParse($item, [ref]$null)) {
+            # Check if the item is a subnet range in CIDR notation
+            if ($item -match '^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$') {
+                # Add the subnet range to the list
+                $ips += $item
+            } else {
+                # Add the IP address to the list
+                $ips += $item
+            }
+        } else {
+            # Resolve the domain to an IP address and add it to the list
+            $ip = [System.Net.Dns]::GetHostAddresses($item) | Select-Object -First 1
+            $ips += $ip
+        }
+    }
+    New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips | Out-Null
+    #New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile $profile | Out-Null
 }
 
 # Create a rule to block all incoming traffic on each port
