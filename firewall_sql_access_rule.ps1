@@ -70,7 +70,7 @@ if ($rule) {
     New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips | Out-Null
     #New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile $profile | Out-Null
 }
-
+}
 # Create a rule to block all incoming traffic on each port
 # Check if the firewall rule already exists
 
@@ -93,4 +93,3 @@ while ($true) {
     Start-Sleep -Seconds 300
 }
 
-}
