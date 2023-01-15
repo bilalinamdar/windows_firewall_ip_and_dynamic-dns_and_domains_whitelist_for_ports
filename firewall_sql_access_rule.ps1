@@ -71,7 +71,7 @@ function Update-FirewallRule($port, $myservice) {
     #if (-not $ruleExists) {
     #    New-NetFirewallRule -Name $blockRuleName -DisplayName $blockRuleDisplayName -Direction Inbound -Protocol TCP -LocalPort $ports[$i] -Action Block -Profile Public  | Out-Null
     #}
-}
+#}
 
 # Create or update the firewall rules for each port
 while ($true) {
