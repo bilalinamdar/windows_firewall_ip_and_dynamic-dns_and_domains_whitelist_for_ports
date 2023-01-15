@@ -55,7 +55,8 @@ function Update-FirewallRule($port, $myservice) {
                 $ips += $ip
             }
         }
-        New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile Public | Out-Null
+        New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips | Out-Null
+        #New-NetFirewallRule -Name $ruleName -DisplayName $serviceDisplayName -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -RemoteAddress $ips -Profile Public | Out-Null
     }
 }
 
