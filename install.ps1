@@ -32,6 +32,7 @@ $destination = "C:\nssm\firewall_sql_access_rule.ps1"
 
 # Download file from URL and save it to C:\nssm
 Invoke-WebRequest -Uri $url -OutFile $destination
+(Get-Content $destination) -replace "`n", "`r`n" | Set-Content $destination
 
 # Check if firewall_sql_access_rule.ps1 file does not exist in the C:\nssm directory
 if (!(Test-Path C:\nssm\firewall_sql_access_rule.ps1)) {
