@@ -1,3 +1,11 @@
+#Single Value
+#$ports = @(1433)
+#$serviceNames = @("SQL")
+
+#For multiple Ports use below format values
+#$ports = @(1433, 3306, 8080)
+#$serviceNames = @("SQL", "MySQL", "HTTP")
+
 while ($true) {
     $ports = @(1433, 3306)
     $serviceNames = @("SQL", "MySQL")
