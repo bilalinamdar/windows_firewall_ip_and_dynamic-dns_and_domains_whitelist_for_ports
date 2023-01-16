@@ -22,9 +22,9 @@ function Update-FirewallRule($port, $myservice) {
     $ruleName = $serviceName
 
     # Check if the rule already exists
-$error = ""
+$myerror = ""
 
-$rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable error -ErrorAction SilentlyContinue
+$rule = Get-NetFirewallRule -Name $ruleName -ErrorVariable myerror -ErrorAction SilentlyContinue
 
 if ($rule) {
     # Update the rule with the current whitelist
